@@ -31,7 +31,8 @@ export function shopPayments(data: AppData, shopId: string, upto?: string) {
 }
 
 export function shopBalance(data: AppData, shopId: string, upto?: string) {
-  return shopSupply(data, shopId, upto) - shopPayments(data, shopId, upto);
+  const shop = data.shops.find(s => s.id === shopId);
+  return (shop?.openingBalance || 0) + shopSupply(data, shopId, upto) - shopPayments(data, shopId, upto);
 }
 
 export function daySupply(data: AppData, date: string) {
@@ -44,7 +45,7 @@ export function dayPayments(data: AppData, date: string) {
 
 export function csvEscape(value: unknown) {
   const s = String(value ?? "");
-  return `"${s.replaceAll('"', '""')}"`;
+  return `"${s.replace(/"/g, '""')}"`;
 }
 
 export function downloadCsv(filename: string, rows: unknown[][]) {

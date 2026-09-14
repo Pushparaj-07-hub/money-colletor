@@ -8,6 +8,7 @@ export type Product = {
 export type Shop = {
   id: string;
   name: string;
+  openingBalance: number;
   owner: string;
   phone: string;
   address: string;
